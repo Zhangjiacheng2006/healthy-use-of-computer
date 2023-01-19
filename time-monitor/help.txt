@@ -1,0 +1,41 @@
+Commands:
+    !<command>      -- Run command in system terminal
+    help            -- Show this
+    exit            -- GoodBye
+
+    [plot [n|h|s]] [detailed|d] <year> <month> <day>
+                    -- Check history status on day(year,month,day)
+					-- n: at a normal size, h: streached, s: super streached
+					-- detailed : print the amount of time spent in each hour, conflict with 'plot'
+    [plot [n|h|s]] [detailed|d] <bYear> <bMonth> <bDay> <eYear> <eMonth> <eDay>
+                    -- Check history status from day(bYear,bMonth,bDay) to day(eYear,eMonth,eDay) (inclusive)
+    [plot [n|h|s]] [detailed|d] today|day 
+                    -- Check history status of today
+    [plot [n|h|s]] [detailed|d] week
+                    -- Check history status of last week
+	recMode 0|1|2|3 -- Set time record to this level
+	                -- 0 -> no moniting (not recommended)
+				    -- 1 -> only monitor mouse&keyboard activity
+					-- 2 -> only monitor screen activity
+					-- 3 -> monitor both
+
+    forbid <bHour> <bMin> <bSec> <eHour> <eMin> <eSec> [from <bYear> <bMonth> <bDay>] [to <eYear> <eMonth> <eDay>] [every day|mon|tue|wed|thu|fri|sat|sun|weekday|weekend|<feq>] [for "<appName>"]
+                    -- Forbid you from using your computer from bHour:bMin:bSec to eHour:eMin:eSec on these days
+					-- each digit of 'feq' in binary represent whether it would effect that day in week. eg. 1:Monday 2:Tuesday 3:Monday&Tuesday ...
+    getforbid       -- Get all forbiden periods, to get id
+    remforbid <id>  -- Remove forbiden periods with id, separted by ' '
+
+    setTotTime <Hour> <Min> <Sec> [from <bYear> <bMonth> <bDay>] [to <eYear> <eMonth> <eDay>] [every day|mon|tue|wed|thu|fri|sat|sun|weekday|weekend|<feq>] [for "<appName>"]
+                    -- Total time for you to use your programs on these days
+    getTotTime      -- Get total time for you to use your programs, to get id
+    remTotTime <id> -- Remove total time for you to use your programs with id, separted by ' '
+
+    whitelist <app> -- add the app to whitelist
+	getWhitelist    -- Get all whitelist programs, to get id
+	remWhiteList <id>
+	                -- remove app from whitelist
+
+    password ["<pass>"]
+                    -- Set password to pass, otherwise remove password
+	free            -- Disable password (temporarily)
+	lock            -- Enable password (temporarily)
