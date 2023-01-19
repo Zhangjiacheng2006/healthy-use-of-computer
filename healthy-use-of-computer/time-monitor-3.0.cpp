@@ -43,6 +43,7 @@ vector<__int32> wlss;
 vector<wstring> appMap;
 vector<__int32> appTime;
 vector<bool> appAllow;
+vector<bool> appRstr;
 
 __int16 tih[24];
 tm endT,begT; int sumT=0;
@@ -184,6 +185,7 @@ void loadSet(){ // get & change settings
 	for(int i=0;i<appMap.size();i++)
 		appTime.push_back(cmap.count(appMap[i])?cmap[appMap[i]]:0);
 	appAllow.resize(appTime.size(),false);
+	appRstr.resize(appTime.size(),false);
 }
 struct LoadRestrictPara{int id;HWND topw;};
 LoadRestrictPara restrictPara;
@@ -195,8 +197,14 @@ DWORD WINAPI loadRestrict(PVOID p){
 	int res=MessageBoxW(u.topw,(L"根据你设定的对 "+str+L" 的使用规则\n你现在不能使用它了，我来帮你关掉\n你可以拒绝，但只能换来一分钟时间保存状态").data(),title.data(),MB_YESNO|MB_ICONSTOP|MB_TOPMOST);
 	if(res==IDYES) SendMessage(u.topw,WM_CLOSE,0,0);
 	else{
-		appAllow[u.id]=1; Sleep(60000); appAllow[u.id]=0; 
-		SendMessage(u.topw,WM_CLOSE,0,0);
+		if(appRstr[u.id]){
+			SendMessage(u.topw,WM_CLOSE,0,0);
+			const wstring text=L"给过你一分钟了";
+			MessageBoxW(0,text.data(),title.data(),MB_OK|MB_ICONSTOP|MB_TOPMOST);
+		}else{
+			appAllow[u.id]=1; Sleep(60000); appAllow[u.id]=0; appRstr[u.id]=1;
+			SendMessage(u.topw,WM_CLOSE,0,0);
+		}
 	}
 	return 0;
 }
