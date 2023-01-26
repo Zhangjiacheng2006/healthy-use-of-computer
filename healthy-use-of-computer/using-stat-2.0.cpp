@@ -113,7 +113,9 @@ bool wantPass(){
 	if(password.empty()) return true;
 	if(nedpas==false)    return true;
 	cout<<"input password to continue: ";
-	string str; cin>>str; if(str==password) return true;
+	string str; getline(cin,str); for(unsigned int i=0;i<str.length();i++)
+		if(str[i]>='A'&&str[i]<='Z') str[i]=str[i]-'A'+'a';
+	if(str==password) return true;
 	puts("wrong password"); return false;
 }
 vector<vector<int>> query(int bY,int bM,int bD,int eY,int eM,int eD){ vector<vector<int>> res;
@@ -276,7 +278,7 @@ int main(){
 					<<' '<<int(cur.bHour)<<':'<<int(cur.bMin)<<':'<<int(cur.bSec)<<"-"<<int(cur.eHour)<<':'<<int(cur.eMin)<<':'<<int(cur.eSec)<<' '
 					<<"feq="<<bitset<7>(int(cur.feq))<<" for "<<(appMap[cur.appId].empty()?string("all apps"):wtc(appMap[cur.appId]))<<endl;
 			}
-		}else if(eql(0,"getforbid")||eql(0,"gfb")||((eql(0,"forbid")&&cmds.size()==1))){ needpass
+		}else if(eql(0,"getforbid")||eql(0,"gfb")||((eql(0,"forbid")&&cmds.size()==1))){
 			for(int i=0;i<fobs.size();i++){
 				ForbidUnit cur=fobs[i];
 				cout<<"Id="<<i<<": "<<int(cur.bYear)<<'/'<<int(cur.bMonth)<<'/'<<int(cur.bDay)<<"-"<<int(cur.eYear)<<'/'<<int(cur.eMonth)<<'/'<<int(cur.eDay)
@@ -335,7 +337,7 @@ int main(){
 				cout<<"Success "<<int(cur.bYear)<<'/'<<int(cur.bMonth)<<'/'<<int(cur.bDay)<<"-"<<int(cur.eYear)<<'/'<<int(cur.eMonth)<<'/'<<int(cur.eDay)
 					<<' '<<int(cur.Hour)<<':'<<int(cur.Min)<<':'<<int(cur.Sec)<<" feq="<<bitset<7>(int(cur.feq))<<" for "<<(appMap[cur.appId].empty()?string("all apps"):wtc(appMap[cur.appId]))<<endl;
 			}
-		}else if(eql(0,"gettottime")||eql(0,"gtt")||(eql(0,"tottime")&&cmds.size()==1)){ needpass
+		}else if(eql(0,"gettottime")||eql(0,"gtt")||(eql(0,"tottime")&&cmds.size()==1)){
 			for(int i=0;i<ttts.size();i++){
 				TotTimeUnit cur=ttts[i];
 				cout<<"Id="<<i<<": "<<int(cur.bYear)<<'/'<<int(cur.bMonth)<<'/'<<int(cur.bDay)<<"-"<<int(cur.eYear)<<'/'<<int(cur.eMonth)<<'/'<<int(cur.eDay)
@@ -363,7 +365,7 @@ int main(){
 			for(int id=0;id<appMap.size();id++) if(appMap[id]==appName){ appId=id;break; }
 			if(appId==-1){ appId=appMap.size(); appMap.push_back(appName); }
 			wlss.push_back(appId); writeSet(); cout<<"Success "<<wtc(appMap[appId])<<endl;
-		}else if(eql(0,"getwhitelist")||eql(0,"gwl")||(eql(0,"whitelist")&&cmds.size()==1)){ needpass
+		}else if(eql(0,"getwhitelist")||eql(0,"gwl")||(eql(0,"whitelist")&&cmds.size()==1)){
 			for(int i=0;i<wlss.size();i++) cout<<"Id="<<i<<": "<<wtc(appMap[wlss[i]])<<endl;
 			if(wlss.size()==0) puts("list is empty.");
 		}else if(eql(0,"remwhitelist")||eql(0,"rwl")){ needpass
