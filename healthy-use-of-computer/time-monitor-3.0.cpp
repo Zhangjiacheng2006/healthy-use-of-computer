@@ -297,7 +297,7 @@ void mainloop(){ // the main loop
 			) flag=u.appId;
 		}
 		for(__int32 u:wlss) if(ieds.count(u)) flag=-1; // check whitelist
-		if(flag!=-1&&strcmp(name,"time is up")!=0){
+		if(flag!=-1&&strcmp(name,"time is up")!=0&&strcmp(name,"time-monitor-author=ZJC-ver1.0")!=0){
 			restrictPara.id=flag; restrictPara.topw=hwnd;
 			CreateThread(NULL,0,loadRestrict,PVOID(&restrictPara),0,NULL);
 		}
@@ -308,6 +308,7 @@ void mainloop(){ // the main loop
 int main(){
 	// hide window
 	if(SetConsoleTitle("time-monitor-author=ZJC-ver1.0")){
+		Sleep(100); ShowWindow(FindWindow(0,"time-monitor-author=ZJC-ver1.0"),SW_SHOWNORMAL);
 		Sleep(100); ShowWindow(FindWindow(0,"time-monitor-author=ZJC-ver1.0"),SW_HIDE);
 	} else ShowWindow(GetForegroundWindow(),SW_HIDE);
 	// ensure path
